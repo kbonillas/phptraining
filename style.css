@@ -1,0 +1,42 @@
+*{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+nav{
+    background: #54678C; 
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+}
+
+nav ul{
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+nav ul li{
+    list-style-type: none;
+}
+
+nav ul li a{
+    margin: 0;
+    text-decoration: none;
+    padding: 20px;
+    color: #fff;
+    font-weight: 400;
+}
+
+nav ul li a:hover{
+    margin: 0;
+    text-decoration: none;
+    padding: 20px;
+    background-color: rgb(44, 53, 73);
+}
+
+p{
+    text-align: center;
+}

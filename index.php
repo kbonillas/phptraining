@@ -1,7 +1,14 @@
 <?php
 require_once("connect.php");
 require_once("functions-new.php");
-$thisPageName = $_GET["page"] ?? "Home";
+$uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+
+$thisPageName = array_pop($uriSegments);
+if ($thisPageName == ""){
+  $thisPageName = "index";
+}
+
+// $thisPageName = $_GET["page"] ?? "Home";
 
 ?>
 <!DOCTYPE html>
@@ -12,7 +19,7 @@ $thisPageName = $_GET["page"] ?? "Home";
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title><?php makeTitle($conn, $thisPageName); ?></title>
+    <title><?php // makeTitle($conn, $thisPageName); ?></title>
 </head>
 <body>
   <nav>
@@ -23,6 +30,7 @@ $thisPageName = $_GET["page"] ?? "Home";
   <section>
     <div>
         <?php
+          // echo $thisPageName;
           makeContent($conn, $thisPageName);
         ?>
     </div>

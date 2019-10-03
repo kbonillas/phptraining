@@ -1,14 +1,24 @@
 <?php
+session_start();
 require_once("connect.php");
 require_once("functions-new.php");
+$loggedIn = $_SESSION['loggedin'];
+/*
+this pulls the text from after 
+the first / and sets it to an array
+*/
 $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
+/* 
+this pulls the last item out of the uri array and sets
+$thisPageName variable to that item
+*/
 $thisPageName = array_pop($uriSegments);
+
+// this sets the pagename if none if provided in the url
 if ($thisPageName == ""){
   $thisPageName = "index";
 }
-
-// $thisPageName = $_GET["page"] ?? "Home";
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +34,8 @@ if ($thisPageName == ""){
 <body>
   <nav>
     <?php
-      makeNav($conn);
+      makeNav($conn, $loggedIn);
+      echo "<p>" . $loggedIn . "</p>";
     ?>
   </nav>
   <section>

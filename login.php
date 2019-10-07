@@ -1,5 +1,48 @@
 <?php
 session_start();
-$loggedIn = $_SESSION["loggedin"];
-echo "<h1>Login Page</h1>";
-echo $loggedIn;
+require_once('connect.php');
+
+if (!empty($_POST)){
+    // if not logged in then check if login was submitted
+    // -- this is temporary!! -- still need DB stuff
+    $sql = "SELECT username, password, realname FROM test.users";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+
+    if ($_POST["username"] == $row["username"] && 
+        md5($_POST["password"]) == $row["password"]) 
+        {
+            $_SESSION["loggedin"] = "logged in";
+            $loggedIn = $_SESSION["loggedin"];
+        }
+} else { 
+    $loggedIn = $_SESSION["loggedin"] ?? ["not logged in"];
+}
+
+if ($loggedIn == "logged in"){
+    // if "logged in" then redirect to index
+    header("Location: http://192.168.33.10/index");
+} else {
+    // if not logged in
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="style.css">
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>Login Page</h1>
+        <form action="login.php" method="post">
+            Username: <input type="text" name="username"> </br>
+            Password: <input type="password" name="password"> </br>
+            <input type="submit" value="login">
+        </form>
+
+    </body>
+    </html>
+    <?php
+}
